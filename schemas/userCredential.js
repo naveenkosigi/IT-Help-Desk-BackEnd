@@ -15,4 +15,4 @@ const userCredentialSchema=new schema({
 
 userCredentialSchema.plugin(passportLocalStratergy);
 
-export default mongoose.model('userCredential',userCredentialSchema);
+module.exports=mongoose.model('userCredential',userCredentialSchema);

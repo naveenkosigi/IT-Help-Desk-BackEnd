@@ -13,13 +13,12 @@ authenticator.signUp=function(req,res){
         userCredential.register(new userCredential({
             username:req.body.username
         }),req.body.password,(err) => {
+            console.log("inside success");
             if(err){
+                console.log("inside error");
                 return res.status(500).send('The following error occured' + err);
             }
-            passport.authenticate('local',{session:false},(req,res,info) => {
-                console.log("info",info);
-                return res.status(200).send("Successfully created a new account");
-            });
+            return res.status(200).send("Successfully created a new account");
         });
     }
     catch(err){
@@ -29,24 +28,18 @@ authenticator.signUp=function(req,res){
 
 authenticator.login=function(req,res,next){
     try{
+        console.log("called login");
         if(!req.body.username || !req.body.password){
             return res.status(400).send("Invalid input");
         }
-        passport.authenticate('local',{session:false},(err,user) => {
-            if(err || !user){
-                return res.status(400).send("Invalid input");
-            }
-            req.login(user,{session:false},(err) => {
-                if(err){
-                    res.send("Login error",err);
-                }
-
-                const token=jwt.sign({id:user.id,username:user.username},'test');
-                return res.json({user:user.username,token:token});
-            });
-        });
+        if(req.user){
+            const token=jwt.sign({id:req.user.id,username:req.user.username},'test');
+            return res.json({user:req.user.username,token:token});
+        }
     }
     catch(err){
         return res.status(500).send('The following error occured' + err);
     }
 }
+
+module.exports=authenticator

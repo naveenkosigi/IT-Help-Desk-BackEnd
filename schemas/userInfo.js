@@ -14,4 +14,4 @@ const userInfoSchema=new schema({
     }
 });
 
-export default mongoose.model('userInfo',userInfoSchema);
+module.exports=mongoose.model('userInfo',userInfoSchema);
