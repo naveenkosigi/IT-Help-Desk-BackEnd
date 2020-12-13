@@ -17,7 +17,15 @@ const userInfoSchema=new schema({
         type:mongoose.SchemaTypes.Email,
         unique:true,
         required:true
+    },
+    permissions:{
+        type:schema.Types.ObjectId,
+        ref:'permissions'
+    },
+    isTechnician:{
+        type:Boolean,
+        default:false
     }
-});
+},{timestamps:true});
 
 module.exports=mongoose.model('userInfo',userInfoSchema);

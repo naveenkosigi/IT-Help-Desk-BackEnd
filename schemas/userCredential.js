@@ -7,7 +7,7 @@ const userCredentialSchema=new schema({
         type:String,
         unique:true
     }
-});
+},{timestamps:true});
 
 userCredentialSchema.plugin(passportLocalStratergy);
 
