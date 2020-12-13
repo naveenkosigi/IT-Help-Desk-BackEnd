@@ -8,19 +8,23 @@ var authStrategy=require('./dependencies/authStrategy');
 var mongoose=require('mongoose');
 var authenticateRouter=require('./routes/authenticate');
 var bodyParser=require('body-parser');
+const defaultConfigs=require('./default_configs/parentConfig');
 
 var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
 var authenticateRouter=require('./routes/authenticate');
 
 var app = express();
-
 app.use(passport.initialize());
 app.use(bodyParser.json());
+
 
 mongoose.connect('mongodb://localhost/ithelpdesk', { useNewUrlParser: true },(err) => {
   if(err)console.log(err);
 });
+
+//populating db values on first run
+defaultConfigs();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
