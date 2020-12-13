@@ -8,7 +8,7 @@ var authStrategy=require('./dependencies/authStrategy');
 var mongoose=require('mongoose');
 var authenticateRouter=require('./routes/authenticate');
 var bodyParser=require('body-parser');
-const defaultConfigs=require('./default_configs/parentConfig');
+const applyDefaultConfigs=require('./default_configs/parentConfig');
 
 var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
@@ -24,7 +24,7 @@ mongoose.connect('mongodb://localhost/ithelpdesk', { useNewUrlParser: true },(er
 });
 
 //populating db values on first run
-defaultConfigs();
+applyDefaultConfigs();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
