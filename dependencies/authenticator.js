@@ -7,11 +7,38 @@ const authenticator={};
 
 authenticator.signUp=function(req,res){
     try{
-        if(!req.body.email || req.body.email == null || req.body.email == ""){
-            return res.status(500).send('The following error occured email id is mandatory');
-        }
+        userInfo.create(req.body)
+        .then(user => {
+            if(user){
+                userCredential.register(new userCredential({
+                    username:req.body.username,
+                }),req.body.password,(err) => {
+                    console.log("inside success");
+                    if(err){
+                        console.log("inside error");
+                        userInfo.findByIdAndDelete(user._id)
+                        .then((user) => {
+                            console.log("deleted");
+                            return res.status(500).send('The following error occured' + err);
+                        })
+                        .catch(err => {
+                            return res.status(500).send('The following error occured' + err);
+                        })
+                    }
+                    else{
+                        return res.status(200).send("Successfully created a new account");
+                    }
+                });
+            }
+        })
+        .catch((err) => {
+            return res.status(500).send('The following error occured' + err);
+        });
+        
+        
+        /*
         userCredential.register(new userCredential({
-            username:req.body.username
+            username:req.body.username,
         }),req.body.password,(err) => {
             console.log("inside success");
             if(err){
@@ -20,6 +47,7 @@ authenticator.signUp=function(req,res){
             }
             return res.status(200).send("Successfully created a new account");
         });
+        */
     }
     catch(err){
         return res.status(500).send('The following error occured' + err);

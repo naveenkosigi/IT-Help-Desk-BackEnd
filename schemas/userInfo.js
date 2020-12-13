@@ -1,5 +1,6 @@
 const mongoose=require('mongoose');
 const schema=mongoose.Schema;
+require('mongoose-type-email');
 
 const userInfoSchema=new schema({
     firstName:{
@@ -11,6 +12,11 @@ const userInfoSchema=new schema({
     },
     extensionNo:{
         type:String
+    },
+    email:{
+        type:mongoose.SchemaTypes.Email,
+        unique:true,
+        required:true
     }
 });
 
