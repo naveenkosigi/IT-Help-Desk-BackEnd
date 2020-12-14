@@ -18,10 +18,12 @@ const userInfoSchema=new schema({
         unique:true,
         required:true
     },
-    permissions:{
+    permissions:[
+        {
         type:schema.Types.ObjectId,
         ref:'permissions'
-    },
+        }
+    ],
     isTechnician:{
         type:Boolean,
         default:false
