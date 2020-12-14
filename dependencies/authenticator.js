@@ -27,14 +27,13 @@ authenticator.signUp=function(req,res){
                         })
                     }
                     else{
-                        let permissionCreated=permissionController.createUserPermissions(user._id);
-                        if(permissionCreated){
-                            console.log("Permission created");
-                        }
-                        else{
-                            console.log("Permission not created");
-                        }
-                        return res.status(200).send("Successfully created a new account");
+                        permissionController.createUserPermissions(user._id)
+                        .then(() => {
+                            return res.status(200).send("Successfully created a new account");
+                        })
+                        .catch((err) => {
+                            return res.status(500).send('The following error occured while creating user permissions' + err);
+                        })
                     }
                 });
             }
