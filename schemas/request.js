@@ -8,7 +8,8 @@ autoIncrement.initialize(connection);
 const requestSchema=new schema({
     subject:{
         type:String,
-        maxlength:70
+        maxlength:70,
+        required:true
     },
     description:{
         type:String
@@ -23,7 +24,9 @@ const requestSchema=new schema({
     },
     requester:{
         type:schema.Types.ObjectId,
-        ref:'requester'
+        ref:'requester',
+        required:true
+        
     },
     technician:{
         type:schema.Types.ObjectId,
@@ -36,6 +39,11 @@ requestSchema.plugin(autoIncrement.plugin,{
     field:'displayId',
     startAt:1,
     incrementBy:1
+});
+
+requestSchema.pre('validate',function(next){
+    console.log("validate fired");
+    next();
 });
 
 module.exports=connection.model('request',requestSchema);

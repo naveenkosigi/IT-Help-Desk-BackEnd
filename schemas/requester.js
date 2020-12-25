@@ -20,4 +20,9 @@ const requesterSchema=new schema({
     }
 },{timestamps:true});
 
+requesterSchema.pre('validate',function(next){
+    console.log("validate fired");
+    next();
+});
+
 module.exports=mongoose.model('requester',requesterSchema);

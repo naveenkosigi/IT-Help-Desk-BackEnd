@@ -1,18 +1,51 @@
+const e = require("express");
+
 const frameworkUtil={};
 
-frameworkUtil.createDocument=function(mongooseSchema,fields,callback){
-    mongooseSchema.create(fields)
+frameworkUtil.createDocument=function(mongooseSchema,req,res){
+    mongooseSchema.create(req.body)
     .then(document => {
         console.log("Created Document ->",document);
-        if(callback && callback instanceof Function){
-            callback(document);
-        }
+        res.json(document);
     })
     .catch(err => {
-        console.log("Failed to create a new document as the following error occured ->",err);
-        callback(undefined,err);
+        res.json(err);
     });
 
+}
+
+frameworkUtil.getAllDocuments=function(mongooseSchema,req,res){
+    mongooseSchema.find({})
+    .then(documents => {
+        res.json(documents);
+    })
+    .catch(err => {
+        res.json(err);
+    });
+}
+
+frameworkUtil.updateDocumentById=function(mongooseSchema,req,res){
+    mongooseSchema.findOneAndUpdate({_id:req.params.id},req.body)
+    .then(document => {
+        mongooseSchema.findById(req.params.id)
+        .then(document => {
+            res.json(document);
+        });
+    })
+    .catch(err => {
+        res.json(err);
+    });
+}
+
+frameworkUtil.getDocumentById=function(mongooseSchema,req,res){
+    mongooseSchema.findById(req.params.id)
+    .populate(req.body.populateFields)
+    .then(document => {
+        res.json(document);
+    })
+    .catch(err => {
+        res.json(err);
+    });
 }
 
 module.exports=frameworkUtil;
