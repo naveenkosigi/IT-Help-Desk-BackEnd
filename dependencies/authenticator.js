@@ -77,4 +77,6 @@ authenticator.login=function(req,res,next){
     }
 }
 
+authenticator.verifyUser=passport.authenticate('jwt',{session:false});
+
 module.exports=authenticator
