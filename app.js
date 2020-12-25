@@ -26,6 +26,7 @@ app.use(passport.initialize());
 //app.use(passport.session());
 app.use(bodyParser.json());
 
+//mongoose.set('runValidators', true); // here is your global setting
 
 var connection=mongoose.connect('mongodb://localhost/ithelpdesk', { useNewUrlParser: true },(err) => {
   if(err)console.log(err);

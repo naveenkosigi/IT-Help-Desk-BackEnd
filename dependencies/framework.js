@@ -25,7 +25,7 @@ frameworkUtil.getAllDocuments=function(mongooseSchema,req,res){
 }
 
 frameworkUtil.updateDocumentById=function(mongooseSchema,req,res){
-    mongooseSchema.findOneAndUpdate({_id:req.params.id},req.body)
+    mongooseSchema.update({_id:req.params.id},{$set:req.body},{runValidators:true})
     .then(document => {
         mongooseSchema.findById(req.params.id)
         .then(document => {
