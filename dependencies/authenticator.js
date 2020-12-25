@@ -12,7 +12,7 @@ authenticator.signUp=function(req,res){
         .then(user => {
             if(user){
                 userCredential.register(new userCredential({
-                    username:req.body.username,
+                    username:req.body.username,_id:user._id
                 }),req.body.password,(err) => {
                     console.log("inside success");
                     if(err){

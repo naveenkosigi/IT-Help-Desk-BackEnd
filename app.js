@@ -11,6 +11,7 @@ var bodyParser=require('body-parser');
 const applyDefaultConfigs=require('./default_configs/parentConfig');
 var sessions=require('express-session');
 var authenticator=require('./dependencies/authenticator');
+var permissionsRouter=require('./routes/permissions');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -48,7 +49,7 @@ app.use(authenticator.verifyUser,function(req,res,next){
   console.log(req.user);
   next();
 });
-
+app.use('/permissions',permissionsRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
