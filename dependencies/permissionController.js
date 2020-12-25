@@ -1,7 +1,7 @@
 const permissionController={};
 const permissions=require('../schemas/userPermissions');
 const subModules=['note','history','tagged_users'];
-const userInfo=require('../schemas/userInfo');
+const technician=require('../schemas/technician');
 
 permissionController.createUserPermissions=function(userId){
     try
@@ -16,7 +16,7 @@ permissionController.createUserPermissions=function(userId){
                     permissionIds.push(permission._id);
                     console.log("created for submodule",value);
                     if(index == subModules.length-1){
-                        userInfo.findByIdAndUpdate(userId,{permissions : permissionIds})
+                        technician.findByIdAndUpdate(userId,{permissions : permissionIds})
                         .then(() => {
                             res(console.log("Permissions created for user ",userId));
                         });

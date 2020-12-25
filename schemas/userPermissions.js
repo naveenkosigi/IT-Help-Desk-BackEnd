@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 const schema=mongoose.Schema;
-const userInfo=require('./userInfo');
+const requester=require('./requester');
 
 const permissionsSchema=new schema({
     module:{
@@ -29,7 +29,7 @@ const permissionsSchema=new schema({
     },
     user:{
         type:schema.Types.ObjectId,
-        ref:'userInfo',
+        ref:'requester',
     }
 },{timestamps:true});
 

@@ -1,5 +1,6 @@
 const userCredential=require('../schemas/userCredential');
-const userInfo=require('../schemas/userInfo');
+const requester=require('../schemas/requester');
+const technician=require('../schemas/technician');
 const bodyParser=require('body-parser');
 const passport=require('passport');
 const jwt=require('jsonwebtoken');
@@ -8,16 +9,19 @@ const authenticator={};
 
 authenticator.signUp=function(req,res){
     try{
-        userInfo.create(req.body)
+        let userSchema=req.body.isTechnician?technician:requester;
+        userSchema.create(req.body)
         .then(user => {
             if(user){
                 userCredential.register(new userCredential({
-                    username:req.body.username,_id:user._id
+                    username:req.body.username,
+                    _id:user._id,
+                    email:req.body.email
                 }),req.body.password,(err) => {
                     console.log("inside success");
                     if(err){
                         console.log("inside error");
-                        userInfo.findByIdAndDelete(user._id)
+                        userSchema.findByIdAndDelete(user._id)
                         .then((user) => {
                             console.log("deleted");
                             return res.status(500).send('The following error occured' + err);
@@ -27,13 +31,19 @@ authenticator.signUp=function(req,res){
                         })
                     }
                     else{
-                        permissionController.createUserPermissions(user._id)
-                        .then(() => {
+                        console.log(req.body.isTechnician);
+                        if(!req.body.isTechnician){
                             return res.status(200).send("Successfully created a new account");
-                        })
-                        .catch((err) => {
-                            return res.status(500).send('The following error occured while creating user permissions' + err);
-                        })
+                        }
+                        else{
+                            permissionController.createUserPermissions(user._id)
+                            .then(() => {
+                                return res.status(200).send("Successfully created a new account");
+                            })
+                            .catch((err) => {
+                                return res.status(500).send('The following error occured while creating user permissions' + err);
+                            });
+                        }
                     }
                 });
             }

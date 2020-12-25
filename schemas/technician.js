@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const schema=mongoose.Schema;
 require('mongoose-type-email');
 
-const userInfoSchema=new schema({
+const technicianSchema=new schema({
     firstName:{
         type:String,
         required:true
@@ -23,11 +23,7 @@ const userInfoSchema=new schema({
         type:schema.Types.ObjectId,
         ref:'permissions'
         }
-    ],
-    isTechnician:{
-        type:Boolean,
-        default:false
-    }
+    ]
 },{timestamps:true});
 
-module.exports=mongoose.model('userInfo',userInfoSchema);
+module.exports=mongoose.model('technician',technicianSchema);
