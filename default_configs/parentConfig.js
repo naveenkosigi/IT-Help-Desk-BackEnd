@@ -1,3 +1,9 @@
+
 module.exports=function(){
-    console.log("parentConfig called");
+    try{
+        console.log("parentConfig called");
+    }
+    catch(err){
+        console.log("Error occured at defaultConfig ->",err);
+    }
 }

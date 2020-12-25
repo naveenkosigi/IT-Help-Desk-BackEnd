@@ -13,6 +13,7 @@ var sessions=require('express-session');
 var authenticator=require('./dependencies/authenticator');
 var permissionsRouter=require('./routes/permissions');
 var permissions=require('./schemas/userPermissions');
+var requestRouter=require('./routes/request');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -26,12 +27,11 @@ app.use(passport.initialize());
 app.use(bodyParser.json());
 
 
-mongoose.connect('mongodb://localhost/ithelpdesk', { useNewUrlParser: true },(err) => {
+var connection=mongoose.connect('mongodb://localhost/ithelpdesk', { useNewUrlParser: true },(err) => {
   if(err)console.log(err);
 });
 
-//populating db values on first run
-applyDefaultConfigs();
+applyDefaultConfigs(connection);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -59,6 +59,7 @@ app.use(authenticator.verifyUser,function(req,res,next){
 });
 app.use('/permissions',permissionsRouter);
 app.use('/users', usersRouter);
+app.use('/requests', requestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
