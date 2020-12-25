@@ -12,6 +12,7 @@ const applyDefaultConfigs=require('./default_configs/parentConfig');
 var sessions=require('express-session');
 var authenticator=require('./dependencies/authenticator');
 var permissionsRouter=require('./routes/permissions');
+var permissions=require('./schemas/userPermissions');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -46,8 +47,15 @@ app.use('/', indexRouter);
 app.use('/authenticate',authenticateRouter);
 
 app.use(authenticator.verifyUser,function(req,res,next){
-  console.log(req.user);
-  next();
+  permissions.find({user:req.user._id})
+  .then(permissions => {
+    req.permissions=permissions;
+    console.log('req permissions',req.permissions);
+    next();
+  })
+  .catch(err => {
+    next(createError(err));
+  })
 });
 app.use('/permissions',permissionsRouter);
 app.use('/users', usersRouter);
