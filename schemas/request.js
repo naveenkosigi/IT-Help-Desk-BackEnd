@@ -8,8 +8,7 @@ autoIncrement.initialize(connection);
 const requestSchema=new schema({
     subject:{
         type:String,
-        maxlength:70,
-        unique:true
+        maxlength:70
     },
     description:{
         type:String
@@ -24,11 +23,11 @@ const requestSchema=new schema({
     },
     requester:{
         type:schema.Types.ObjectId,
-        ref:'userInfo'
+        ref:'requester'
     },
     technician:{
         type:schema.Types.ObjectId,
-        ref:'userInfo'
+        ref:'technician'
     }
 },{timestamps:true});
 
