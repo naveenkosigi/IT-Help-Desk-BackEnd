@@ -48,4 +48,17 @@ frameworkUtil.getDocumentById=function(mongooseSchema,req,res){
     });
 }
 
+frameworkUtil.isAuthorized=function(parentModule,subModule,operation,request){
+        let permissions=request.permissions;
+        for(var i=0;permissions && permissions instanceof Array  && i<permissions.length;i++){
+            let permission=permissions[i];
+            if(permission.module == parentModule
+                && permission.submodule == subModule
+                && permission[operation] === true){
+                    return true;
+            }
+        }
+        return false;
+}
+
 module.exports=frameworkUtil;
