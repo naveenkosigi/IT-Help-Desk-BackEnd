@@ -61,4 +61,14 @@ frameworkUtil.isAuthorized=function(module,subModule,operation,request){
         return false;
 }
 
+frameworkUtil.deleteDocumentById=function(mongooseSchema,req,res){
+    mongooseSchema.deleteOne({_id:req.params.id})
+    .then(deletedInfo => {
+        res.json(deletedInfo);
+    })
+    .catch(err => {
+        res.json(err);
+    })
+}
+
 module.exports=frameworkUtil;

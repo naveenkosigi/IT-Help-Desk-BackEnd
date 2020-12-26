@@ -28,5 +28,11 @@ router.route('/:id')
         return frameworkUtil.getDocumentById(request,req,res);
     }
     res.status(401).json({"message":"Unauthorized"});
+})
+.delete(function(req,res,next){
+    if(frameworkUtil.isAuthorized("Request","","delete",req)){
+        return frameworkUtil.deleteDocumentById(request,req,res);
+    }
+    res.status(401).json({"message":"Unauthorized"});
 });
 module.exports=router;
