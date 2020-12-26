@@ -18,7 +18,7 @@ router.route('/')
 
 router.route('/:id')
 .put(function(req,res,next){
-    if(frameworkUtil.isAuthorized("Request","","view",req)){
+    if(frameworkUtil.isAuthorized("Request","","edit",req)){
         return frameworkUtil.updateDocumentById(request,req,res);
     }
     res.status(401).json({"message":"Unauthorized"});
