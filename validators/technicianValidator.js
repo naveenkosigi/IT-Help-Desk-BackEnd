@@ -1,8 +1,8 @@
-const requester=require('../schemas/requester');
+const technician=require('../schemas/technician');
 
 module.exports=async(id,opts) => {
     console.log("Called validator",this ,id,opts);
-    const user=await requester.findById(id);
+    const user=await technician.findById(id);
     if(user)return true;
     return false;
 }

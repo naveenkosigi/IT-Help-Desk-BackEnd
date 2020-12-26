@@ -1,7 +1,7 @@
 const schema=require('mongoose').Schema;
 const autoIncrement=require('mongoose-auto-increment');
 const connection=require('mongoose').createConnection('mongodb://localhost/ithelpdesk');
-const requesterValidator=require('../validators/requesterValidator');
+
 
 autoIncrement.initialize(connection);
 
@@ -27,11 +27,12 @@ const requestSchema=new schema({
         type:schema.Types.ObjectId,
         ref:'requester',
         required:true,
-        validate:requesterValidator
+        validate:require('../validators/requesterValidator')
     },
     technician:{
         type:schema.Types.ObjectId,
-        ref:'technician'
+        ref:'technician',
+        validate:require('../validators/technicianValidator')
     }
 },{timestamps:true});
 
