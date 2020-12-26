@@ -17,7 +17,13 @@ const requesterSchema=new schema({
         type:mongoose.SchemaTypes.Email,
         unique:true,
         required:true
-    }
+    },
+    permissions:[
+        {
+        type:schema.Types.ObjectId,
+        ref:'permissions'
+        }
+    ]
 },{timestamps:true});
 
 /*

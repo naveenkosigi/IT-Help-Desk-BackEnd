@@ -9,11 +9,11 @@ const authenticator={};
 
 authenticator.signUp=async(req,res)=>{
     try{
-        let userSchema=req.body.isTechnician?technician:requester;
+        let userSchema=req.body.isTechnician === true?technician:requester;
         userSchema.create(req.body)
         .then(async(user) => {
             let requesterSchema=undefined;
-            if(req.body.isTechnician){
+            if(req.body.isTechnician === true){
                     requesterSchema=new requester({_id:user._id,...req.body});
                     requesterSchema=await requesterSchema.save();
             }
@@ -37,18 +37,13 @@ authenticator.signUp=async(req,res)=>{
                     }
                     else{
                         console.log(req.body.isTechnician);
-                        if(!req.body.isTechnician){
+                        permissionController.createUserPermissions(user._id,req.body.isTechnician)
+                        .then(() => {
                             return res.status(200).send("Successfully created a new account");
-                        }
-                        else{
-                            permissionController.createUserPermissions(user._id)
-                            .then(() => {
-                                return res.status(200).send("Successfully created a new account");
-                            })
-                            .catch((err) => {
-                                return res.status(500).send('The following error occured while creating user permissions' + err);
-                            });
-                        }
+                        })
+                        .catch((err) => {
+                            return res.status(500).send('The following error occured while creating user permissions' + err);
+                        });
                     }
                 });
             }

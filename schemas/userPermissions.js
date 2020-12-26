@@ -29,7 +29,7 @@ const permissionsSchema=new schema({
     },
     user:{
         type:schema.Types.ObjectId,
-        ref:'requester',
+        ref:'requester'
     }
 },{timestamps:true});
 
