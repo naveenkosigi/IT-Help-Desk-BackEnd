@@ -7,11 +7,16 @@ const jwt=require('jsonwebtoken');
 const permissionController=require('./permissionController');
 const authenticator={};
 
-authenticator.signUp=function(req,res){
+authenticator.signUp=async(req,res)=>{
     try{
         let userSchema=req.body.isTechnician?technician:requester;
         userSchema.create(req.body)
-        .then(user => {
+        .then(async(user) => {
+            let requesterSchema=undefined;
+            if(req.body.isTechnician){
+                    requesterSchema=new requester({_id:user._id,...req.body});
+                    requesterSchema=await requesterSchema.save();
+            }
             if(user){
                 userCredential.register(new userCredential({
                     username:req.body.username,
