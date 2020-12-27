@@ -9,7 +9,7 @@ frameworkUtil.createDocument=function(mongooseSchema,req,res){
         res.json(document);
     })
     .catch(err => {
-        res.json(err);
+        res.status(406).json(err);
     });
 
 }
@@ -20,7 +20,7 @@ frameworkUtil.getAllDocuments=function(mongooseSchema,req,res){
         res.json(documents);
     })
     .catch(err => {
-        res.json(err);
+        res.status(406).json(err);
     });
 }
 
@@ -33,7 +33,7 @@ frameworkUtil.updateDocumentById=function(mongooseSchema,req,res){
         });
     })
     .catch(err => {
-        res.json(err);
+        res.status(406).json(err);
     });
 }
 
@@ -44,7 +44,7 @@ frameworkUtil.getDocumentById=function(mongooseSchema,req,res){
         res.json(document);
     })
     .catch(err => {
-        res.json(err);
+        res.status(406).json(err);
     });
 }
 
@@ -67,7 +67,7 @@ frameworkUtil.deleteDocumentById=function(mongooseSchema,req,res){
         res.json(deletedInfo);
     })
     .catch(err => {
-        res.json(err);
+        res.status(406).json(err);
     })
 }
 
