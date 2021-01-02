@@ -3,7 +3,8 @@ const schema=require('mongoose').Schema;
 const statusSchema=new schema({
     name:{
         type:String,
-        unique:true
+        unique:true,
+        required:true
     },
     disabled:{
         type:Boolean,
