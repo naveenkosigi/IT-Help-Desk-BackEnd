@@ -91,4 +91,32 @@ frameworkUtil.deleteDocumentById=function(mongooseSchema,req,res){
     })
 }
 
+frameworkUtil.getSubDocumentsByParentId=async(mongooseSchema,subDocumentName,subDocumentSchema,req,res) => {
+    let document=await mongooseSchema.findById(req.params.id).populate(subDocumentName);
+    if(document[subDocumentName]){
+        res.status(200).send({[subDocumentName]:document[subDocumentName]});
+    }
+    else{
+        res.status(200).json([]);
+    }
+}
+
+frameworkUtil.createSubDocumentByParentId=function(mongooseSchema,subDocumentName,subDocumentSchema,req,res){
+    try{
+        mongooseSchema.findById(req.params.id)
+        .then(document => {
+            subDocumentSchema.create(req.body)
+            .then(subDocument => {
+                mongooseSchema.update({_id:document._id},{$push:{notes:subDocument._id}})
+                .then(updatedDocument => {
+                    res.status(200).json(updatedDocument);
+                });
+            });
+        });
+    }
+    catch(err){
+        res.status(406).json(err);
+    }
+}
+
 module.exports=frameworkUtil;

@@ -32,7 +32,13 @@ const requestSchema=new schema({
     technician:{
         type:schema.Types.ObjectId,
         ref:'technician'
-    }
+    },
+    notes:[
+        {
+            type:schema.Types.ObjectId,
+            ref:'note'
+        }
+    ]
 },{timestamps:true});
 
 requestSchema.plugin(autoIncrement.plugin,{

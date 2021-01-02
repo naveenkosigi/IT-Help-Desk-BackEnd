@@ -35,4 +35,17 @@ router.route('/:id')
     }
     res.status(401).json({"message":"Unauthorized"});
 });
+
+router.route('/:id/notes')
+.get(function(req,res,next){
+    if(frameworkUtil.isAuthorized("Request","note","view",req)){
+        return frameworkUtil.getSubDocumentsByParentId(request,"notes",require('../schemas/note'),req,res);
+    }
+    res.status(401).json({"message":"Unauthorized"});
+})
+.post(function(req,res,next){
+    if(frameworkUtil.isAuthorized("Request","note","add",req)){
+        return frameworkUtil.createSubDocumentByParentId(request,"notes",require('../schemas/note'),req,res);
+    }
+});
 module.exports=router;
