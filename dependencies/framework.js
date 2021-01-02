@@ -17,7 +17,12 @@ frameworkUtil.createDocument=function(mongooseSchema,req,res){
 frameworkUtil.getAllDocuments=function(mongooseSchema,req,res){
     mongooseSchema.find({})
     .then(documents => {
-        res.json(documents);
+        if(documents){
+            res.json(documents);
+        }
+        else{
+            res.status(406).json({"MESSAGE":"Invalid id"});
+        }    
     })
     .catch(err => {
         res.status(406).json(err);
@@ -29,7 +34,12 @@ frameworkUtil.updateDocumentById=function(mongooseSchema,req,res){
     .then(document => {
         mongooseSchema.findById(req.params.id)
         .then(document => {
-            res.json(document);
+            if(document){
+                res.json(document);
+            }
+            else{
+                res.status(406).json({"MESSAGE":"Invalid id"});
+            }
         });
     })
     .catch(err => {
@@ -41,7 +51,12 @@ frameworkUtil.getDocumentById=function(mongooseSchema,req,res){
     mongooseSchema.findById(req.params.id)
     .populate(req.body.populateFields)
     .then(document => {
-        res.json(document);
+        if(document){
+            res.json(document);
+        }
+        else{
+            res.status(406).json({"MESSAGE":"Invalid id"});
+        }
     })
     .catch(err => {
         res.status(406).json(err);
@@ -64,7 +79,12 @@ frameworkUtil.isAuthorized=function(module,subModule,operation,request){
 frameworkUtil.deleteDocumentById=function(mongooseSchema,req,res){
     mongooseSchema.deleteOne({_id:req.params.id})
     .then(deletedInfo => {
-        res.json(deletedInfo);
+        if(deletedInfo){
+            res.json(deletedInfo);
+        }
+        else{
+            res.status(406).json({"MESSAGE":"Invalid id"});
+        }
     })
     .catch(err => {
         res.status(406).json(err);
