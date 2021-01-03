@@ -46,7 +46,8 @@ router.route('/:id/notes')
 .post(function(req,res,next){
     if(frameworkUtil.isAuthorized("Request","notes","add",req)){
         return frameworkUtil.createSubDocumentByParentId(request,"notes",require('../schemas/note'),req,res);
-    }
+    }    
+    res.status(401).json({"message":"Unauthorized"});
 });
 
 router.route('/:id/notes/:subId')
@@ -54,5 +55,6 @@ router.route('/:id/notes/:subId')
     if(frameworkUtil.isAuthorized("Request","notes","view",req)){
         return frameworkUtil.getSubDocumentById(request,"notes",require('../schemas/note'),req,res);
     }
+    res.status(401).json({"message":"Unauthorized"});
 });
 module.exports=router;
