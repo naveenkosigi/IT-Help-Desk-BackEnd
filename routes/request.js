@@ -38,14 +38,21 @@ router.route('/:id')
 
 router.route('/:id/notes')
 .get(function(req,res,next){
-    if(frameworkUtil.isAuthorized("Request","note","view",req)){
+    if(frameworkUtil.isAuthorized("Request","notes","view",req)){
         return frameworkUtil.getSubDocumentsByParentId(request,"notes",require('../schemas/note'),req,res);
     }
     res.status(401).json({"message":"Unauthorized"});
 })
 .post(function(req,res,next){
-    if(frameworkUtil.isAuthorized("Request","note","add",req)){
+    if(frameworkUtil.isAuthorized("Request","notes","add",req)){
         return frameworkUtil.createSubDocumentByParentId(request,"notes",require('../schemas/note'),req,res);
+    }
+});
+
+router.route('/:id/notes/:subId')
+.get(function(req,res,next){
+    if(frameworkUtil.isAuthorized("Request","notes","view",req)){
+        return frameworkUtil.getSubDocumentById(request,"notes",require('../schemas/note'),req,res);
     }
 });
 module.exports=router;

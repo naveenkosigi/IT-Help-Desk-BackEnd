@@ -51,7 +51,7 @@ app.use(authenticator.verifyUser,function(req,res,next){
   permissions.find({user:req.user._id})
   .then(permissions => {
     req.permissions=permissions;
-    console.log('req permissions',req.permissions);
+    //console.log('req permissions',req.permissions);
     next();
   })
   .catch(err => {

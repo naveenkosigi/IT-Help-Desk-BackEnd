@@ -1,6 +1,6 @@
 const permissionController={};
 const permissions=require('../schemas/userPermissions');
-const subModules=['note','history','tagged_users'];
+const subModules=['notes','history','tagged_users'];
 const technician=require('../schemas/technician');
 const requester=require('../schemas/requester');
 

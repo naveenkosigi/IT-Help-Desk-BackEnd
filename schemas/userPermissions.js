@@ -9,7 +9,7 @@ const permissionsSchema=new schema({
     },
     submodule:{
         type:String,
-        enum:['note','history','tagged_users','']
+        enum:['notes','history','tagged_users','']
     },
     add:{
         type:Boolean,

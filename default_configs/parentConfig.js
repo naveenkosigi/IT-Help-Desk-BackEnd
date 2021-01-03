@@ -2,6 +2,7 @@
 module.exports=function(){
     try{
         console.log("prePopulation called");
+        require('../schemas/note');
         prePopulateStatusFields();
         prePopulatePriorityFields();
     }
